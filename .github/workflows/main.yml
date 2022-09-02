@@ -50,5 +50,5 @@ jobs:
           files: |
             ./dist/playVoice.exe
             ./playVoice.py
-          name: ${{ github.ref_name }}
-          
+          name: ${{ steps.date.outputs.date }}
+          tag_name: release
