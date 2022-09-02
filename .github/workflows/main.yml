@@ -37,7 +37,7 @@ jobs:
       - name: Setup timezone
         uses: szenius/set-timezone@v1.0
         with:
-          timezoneWindows: "Shanghai Standard Time" 
+          timezoneWindows: "China Standard Time" 
         
       - name: Get current time
         id: date
@@ -50,6 +50,6 @@ jobs:
             ./disy/playVoice.exe
             ./playVoice.py
           name: ${{ steps.date.outputs.date }}
-          tag_name: ${{ steps.date.outputs.date }}
+          tag_name: release
         
         
