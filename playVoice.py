@@ -3,6 +3,7 @@ import wave
 import time
 import threading
 import sys
+import os
 from pynput import keyboard
 
 
@@ -10,47 +11,57 @@ filePath = ""
 device = 0
 playing = ""
 
-p = pyaudio.PyAudio()
-# choose VoiceMeeter Input device
-info = p.get_host_api_info_by_index(0)
-numdevices = info.get('deviceCount')
 
-if len(sys.argv) == 2:
-    if sys.argv[1] == "-c":
-        print("请输入输出设备：")
-        for i in range(0, numdevices):
-            if p.get_device_info_by_index(i)["maxOutputChannels"] > 0:
-                print(str(p.get_device_info_by_index(i)["index"]) +
-                      "\t" + p.get_device_info_by_index(i)["name"])
+def initDevice():
+    global device
 
-        del p
-        device = int(input())
-    else:
-        print("参数错误")
-        sys.exit(0)
-else:
-    for i in range(0, numdevices):
-        if p.get_device_info_by_index(i)["maxOutputChannels"] > 0 and "VoiceMeeter Input" in p.get_device_info_by_index(i)["name"]:
+    p = pyaudio.PyAudio()
+    # choose VoiceMeeter Input device
+    info = p.get_host_api_info_by_index(0)
+    numdevices = info.get('deviceCount')
+
+    if len(sys.argv) == 2:
+        if sys.argv[1] == "-c":
+            print("请输入输出设备：")
+            for i in range(0, numdevices):
+                if p.get_device_info_by_index(i)["maxOutputChannels"] > 0:
+                    print(str(p.get_device_info_by_index(i)["index"]) +
+                          "\t" + p.get_device_info_by_index(i)["name"])
+
             del p
-            device = i
-            break
+            device = int(input())
+        else:
+            print("参数错误")
+            sys.exit(0)
+    else:
+        for i in range(0, numdevices):
+            if p.get_device_info_by_index(i)["maxOutputChannels"] > 0 and "VoiceMeeter Input" in p.get_device_info_by_index(i)["name"]:
+                del p
+                device = i
+                break
 
 
+initDevice()
 importedVoices = {}
 
-# read config file
-with open("config.txt", "r", encoding="utf-8") as f:
-    lines = f.readlines()
-    for line in lines:
-        tkey = line[0:line.index(" ")]
-        tname = line[line.index(" ")+1:]
-        if tname[-1:] == "\n":
-            tname = tname[:-1]
-        importedVoices[tkey] = tname
 
-# print config
-for k, v in importedVoices.items():
-    print(k + "\t" + v)
+def readConfig():
+    # read config file
+    with open("config.txt", "r", encoding="utf-8") as f:
+        lines = f.readlines()
+        for line in lines:
+            tkey = line[0:line.index(" ")]
+            tname = line[line.index(" ")+1:]
+            if tname[-1:] == "\n":
+                tname = tname[:-1]
+            importedVoices[tkey] = tname
+
+    # print config
+    for k, v in importedVoices.items():
+        print(k + "\t" + v)
+
+
+readConfig()
 
 
 def playAudio():
@@ -93,6 +104,13 @@ def cb(key):
         tkey = key.name
     if(hasattr(key, "char")):
         tkey = key.char
+
+    if tkey == "r":
+        os.system("cls")
+        importedVoices.clear()
+        initDevice()
+        readConfig()
+        return
 
     def cPlay():
         thread = threading.Thread(target=playAudio)
