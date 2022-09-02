@@ -32,4 +32,4 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Get exe file
-        run: pyinstaller playVoice.py --encoding=utf-8
+        run: pyinstaller -F playVoice.py --encoding=utf8
