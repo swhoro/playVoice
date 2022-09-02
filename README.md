@@ -24,7 +24,7 @@
 
 ![3](https://user-images.githubusercontent.com/34229589/188124125-4bb43b96-06bd-4d48-8229-aff8ace37e95.png)
 
-上面红框勾上自己的麦克风，下面红框去掉A1（否则二级内会传出麦克风），勾上B1（游戏内可以说话）
+上面红框勾上自己的麦克风，下面红框去掉A1（否则耳机内会传出麦克风），勾上B1（游戏内可以说话）
 
 ![image](https://user-images.githubusercontent.com/34229589/188124296-ef85b9dc-4716-4200-a791-5329e18f3508.png)
 
