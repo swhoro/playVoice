@@ -34,5 +34,16 @@ jobs:
       - name: Get exe file
         run: pyinstaller -F playVoice.py
         
-      - name: Show all files
-        run: ls
+      - name: Get current time
+        id: date
+        run: echo "::set-output name=date::$(date +'%m-%d-%H-%M')"
+      
+      - name: Upload files
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ./disy/playVoice.exe
+            ./playVoice.py
+          name: ${{ steps.date.outputs.date }}
+        
+        
