@@ -34,7 +34,7 @@
 
 ### 我是小白：
 
-前往https://github.com/swhoro/playVoice/releases，下载名为playVoice.exe的软件
+前往[https://github.com/swhoro/playVoice/releases](https://github.com/swhoro/playVoice/releases)，下载名为playVoice.exe的软件
 
 下载完成后在与软件相同目录下新建voice文件夹，新建config.txt:
 
