@@ -10,6 +10,7 @@ from pynput import keyboard
 filePath = ""
 device = 0
 playing = ""
+importedVoices = {}
 
 
 def initDevice():
@@ -41,10 +42,6 @@ def initDevice():
                 break
 
 
-initDevice()
-importedVoices = {}
-
-
 def readConfig():
     # read config file
     with open("config.txt", "r", encoding="utf-8") as f:
@@ -59,9 +56,6 @@ def readConfig():
     # print config
     for k, v in importedVoices.items():
         print(k + "\t" + v)
-
-
-readConfig()
 
 
 def playAudio():
@@ -96,9 +90,6 @@ def playAudio():
 
 
 def cb(key):
-    if key == keyboard.Key.esc:
-        sys.exit(0)
-
     tkey = ""
     if(hasattr(key, "name")):
         tkey = key.name
@@ -118,7 +109,6 @@ def cb(key):
 
     def cStop():
         global playing
-
         playing = ""
 
     if tkey in importedVoices:
@@ -139,6 +129,9 @@ def cb(key):
                 playing = tkey
                 cPlay()
 
+
+initDevice()
+readConfig()
 
 with keyboard.Listener(on_release=cb) as listener:
     listener.join()
