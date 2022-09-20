@@ -39,7 +39,7 @@ jobs:
         
       - name: Get current time
         id: date
-        run: echo "::set-output name=date::$(date +'%m-%d--%H-%M')"
+        run: echo "::set-output name=date::$(date +'%m-%d %H-%M')"
       
       - name: Upload files
         uses: softprops/action-gh-release@v1
